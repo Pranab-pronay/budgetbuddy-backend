@@ -69,11 +69,7 @@ public class AuthTests {
         verify(authenticationManager, times(1)).authenticate(any());
         verify(jwtUtils, times(1)).generateToken(any());
     }
-@Test
-public void sendMailTest(){
-        emailService.sendEmail("pranab.pronay@gmail.com", "check", "check");
-}
-    @Test
+  @Test
     public void testCreateUser_Success() {
         // Mocking authService.createUser
         UserRequest userRequest = new UserRequest(" Doe","datta", "pranab.pronay@gmail.com", "password");
