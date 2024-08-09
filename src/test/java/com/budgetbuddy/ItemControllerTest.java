@@ -85,13 +85,10 @@ public class ItemControllerTest {
         ItemDto itemDto = new ItemDto();
         ItemDto storedItemDto = new ItemDto();
         storedItemDto.setItemId("123");
-
         when(modelMapper.map(itemRequest, ItemDto.class)).thenReturn(itemDto);
         when(itemService.createItem(any(ItemCategory.class), any(ItemDto.class))).thenReturn(storedItemDto);
         when(modelMapper.map(storedItemDto, ItemResponse.class)).thenReturn(new ItemResponse());
-
         ResponseEntity<ItemResponse> response = itemController.createItem(ItemCategory.INCOME, itemRequest);
-
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 

@@ -53,31 +53,20 @@ public class ItemController {
 
     @PostMapping("/{category}")
     public ResponseEntity<ItemResponse> createItem(@PathVariable("category") ItemCategory itemCategory, @RequestBody @Valid ItemRequest itemRequest) {
-        // map to dto
         ItemDto itemDto = modelMapper.map(itemRequest, ItemDto.class);
-        // insert to item database
         ItemDto storedItemDto = itemService.createItem(itemCategory, itemDto);
-
         log.info("CreateItem -- create.{} -- itemId={} userId={}", itemCategory.getType(), storedItemDto.getItemId(), getUserId());
-
-        // return inserted item
         ItemResponse response = modelMapper.map(storedItemDto, ItemResponse.class);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
     @PutMapping("/{category}/{itemId}")
     public ResponseEntity<ItemResponse> updateItem(@PathVariable("category") ItemCategory itemCategory,
                                                    @PathVariable String itemId,
                                                    @RequestBody @Valid ItemRequest itemRequest) {
-        // map to dto
         ItemDto itemDto = modelMapper.map(itemRequest, ItemDto.class);
         itemDto.setItemId(itemId);
-        // insert to item database
         ItemDto storedItemDto = itemService.updateItem(itemCategory, itemDto);
-
         log.info("UpdateItem -- update.{} -- itemId={} userId={}", itemCategory.getType(), storedItemDto.getItemId(), getUserId());
-
-        // return inserted item
         ItemResponse response = modelMapper.map(storedItemDto, ItemResponse.class);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -85,11 +74,8 @@ public class ItemController {
     @DeleteMapping("/{category}/{itemId}")
     public ResponseEntity<Void> deleteItem(@PathVariable("category") ItemCategory itemCategory,
                                            @PathVariable String itemId) {
-        // delete item from database
         itemService.deleteItem(itemCategory, itemId);
-
         log.info("DeleteItem -- delete.{} -- itemId={} userId={}", itemCategory.getType(), itemId, getUserId());
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
